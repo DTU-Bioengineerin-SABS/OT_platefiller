@@ -26,7 +26,7 @@ def run(protocol):
     protocol.set_rail_lights(True)
 
 
-    p300tips = [protocol.load_labware('opentrons_96_filtertiprack_200ul', 11)]
+    p300tips = [protocol.load_labware('opentrons_96_tiprack_300ul', 11)]
     p300 = protocol.load_instrument('p300_multi', 'right', tip_racks=p300tips)
 
     ## temp deck
@@ -71,13 +71,13 @@ def run(protocol):
 
 
         # prewetting the tip and settup for reverse pipetting to avoid bobles in agar
-        p300.aspirate(185, heated_agar['A1'].bottom(hight))
+        p300.aspirate(175, heated_agar['A1'].bottom(hight))
         p300.dispense(175, heated_agar['A1'].bottom(hight))
         #p300.aspirate(175, heated_agar['A1'].bottom(hight))
         #p300.dispense(175, heated_agar['A1'].bottom(hight))
         #p300.aspirate(175, heated_agar['A1'].bottom(hight))
         #p300.dispense(175, heated_agar['A1'].bottom(hight))
-        p300.aspirate(175, heated_agar['A1'].bottom(hight))
+        p300.aspirate(140, heated_agar['A1'].bottom(hight))
         p300.dispense(100, heated_agar['A1'].bottom(hight))
         # Will dispense agar in each well in the plate
         """Start poring the agar"""
