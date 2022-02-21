@@ -8,7 +8,7 @@ target_hight = -11 # target high from the top
 
 def get_values(*names):
     import json
-    _all_values = json.loads("""{"plate_no":"2"}""")
+    _all_values = json.loads("""{"plate_no":"4"}""")
     return [_all_values[n] for n in names]
 
 
@@ -34,7 +34,7 @@ def run(protocol):
     #heated_agar = tempdeck.load_labware('axygen_1_reservoir_90ml')
     heated_agar = tempdeck.load_labware('nest_96_wellplate_200ul_flat', '7')
 
-    DDWP_type = 'nest_96_wellplate_2ml_deep'
+    DWP_type = 'nest_96_wellplate_2ml_deep'
 
 
 
@@ -45,7 +45,7 @@ def run(protocol):
 
     ## list of all the DWP plate positions
     DWPplate = [protocol.load_labware(
-                DDWP_type, s) for s in ['7', '8', '9', '4', '5', '6', '1', '2', '3']]
+                DWP_type, s) for s in ['7', '8', '9', '4', '5', '6', '1', '2', '3']]
 
     # set flow rate of pipet
     p300.flow_rate.aspirate = 150#100#70
@@ -71,13 +71,13 @@ def run(protocol):
 
 
         # prewetting the tip and settup for reverse pipetting to avoid bobles in agar
-        p300.aspirate(185, heated_agar['A1'].bottom(hight))
+        p300.aspirate(175, heated_agar['A1'].bottom(hight))
         p300.dispense(175, heated_agar['A1'].bottom(hight))
         #p300.aspirate(175, heated_agar['A1'].bottom(hight))
         #p300.dispense(175, heated_agar['A1'].bottom(hight))
         #p300.aspirate(175, heated_agar['A1'].bottom(hight))
         #p300.dispense(175, heated_agar['A1'].bottom(hight))
-        p300.aspirate(175, heated_agar['A1'].bottom(hight))
+        p300.aspirate(140, heated_agar['A1'].bottom(hight))
         p300.dispense(100, heated_agar['A1'].bottom(hight))
         # Will dispense agar in each well in the plate
         """Start poring the agar"""
