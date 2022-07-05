@@ -3,7 +3,7 @@ from opentrons import types
 #######################
 # the high measuring from the bottom of the agar resoware
 hight = 0
-target_hight = -11 # target high from the top 
+target_hight = -9 # target high from the top 
 #######################
 
 def get_values(*names):
@@ -22,7 +22,7 @@ metadata = {
 def run(protocol):
     [plate_no] = get_values('plate_no')
 
-    ## Turn on lights while running experiment
+    ## Turn on lights while running run
     protocol.set_rail_lights(True)
 
 
@@ -30,9 +30,8 @@ def run(protocol):
     p300 = protocol.load_instrument('p300_multi', 'right', tip_racks=p300tips)
 
     ## temp deck
-    tempdeck = protocol.load_module('Temperature Module', '10')
-    #heated_agar = tempdeck.load_labware('axygen_1_reservoir_90ml')
-    heated_agar = tempdeck.load_labware('nest_96_wellplate_200ul_flat', '7')
+    tempdeck = protocol.load_module('Temperature Module', 10)
+    heated_agar = tempdeck.load_labware('agilent_1_reservoir_290ml')
 
     mcirolate_type = 'nest_96_wellplate_200ul_flat'
 
@@ -40,8 +39,6 @@ def run(protocol):
 
     # Actively heat the agar
     tempdeck.set_temperature(85)
-
-    ## have delay to ensure that agar is piping HOT!
 
     ## list of all the micro plate positions
     microplates = [protocol.load_labware(
@@ -51,11 +48,11 @@ def run(protocol):
     p300.flow_rate.aspirate = 150#100#70
     p300.flow_rate.dispense = 150#100#80
 
-    ## combe movement to adgitate the agar and avoid it from solidifying:
+    ## combe movement to agitate the agar and avoid it from solidifying:
     # Get the center of well A1.
     center_location = heated_agar['A1'].bottom()
-    combe_move_right = center_location.move(types.Point(x=100, y=0, z=hight))
-    combe_move_left = center_location.move(types.Point(x=0, y=0, z=hight))
+    combe_move_right = center_location.move(types.Point(x=50, y=0, z=hight))
+    combe_move_left = center_location.move(types.Point(x=-50, y=0, z=hight))
 
     ## loop through all the plates placed on the table(given by plate_no value):
     p300.pick_up_tip()
@@ -73,10 +70,6 @@ def run(protocol):
         # prewetting the tip and settup for reverse pipetting to avoid bobles in agar
         p300.aspirate(175, heated_agar['A1'].bottom(hight))
         p300.dispense(175, heated_agar['A1'].bottom(hight))
-        #p300.aspirate(175, heated_agar['A1'].bottom(hight))
-        #p300.dispense(175, heated_agar['A1'].bottom(hight))
-        #p300.aspirate(175, heated_agar['A1'].bottom(hight))
-        #p300.dispense(175, heated_agar['A1'].bottom(hight))
         p300.aspirate(140, heated_agar['A1'].bottom(hight))
         p300.dispense(100, heated_agar['A1'].bottom(hight))
         # Will dispense agar in each well in the plate
@@ -89,7 +82,7 @@ def run(protocol):
     p300.drop_tip()
         
 
-    ## Turn off lights while running experiment
+    ## Turn off lights when run is finished
     protocol.set_rail_lights(False)
 
 
