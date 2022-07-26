@@ -1,15 +1,17 @@
 from opentrons import types
 
 #######################
+# 1 - 9 plates 
+NUMBER_OF_PLATES = 1
 # the high measuring from the bottom of the agar resoware
 hight = 0
 target_hight = -11 # target high from the top 
 #######################
 
-def get_values(*names):
-    import json
-    _all_values = json.loads("""{"plate_no":"4"}""")
-    return [_all_values[n] for n in names]
+# def get_values(*names):
+#     import json
+#     _all_values = json.loads("""{"plate_no":"4"}""")
+#     return [_all_values[n] for n in names]
 
 
 metadata = {
